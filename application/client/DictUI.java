@@ -66,7 +66,7 @@ public abstract class DictUI extends Application {
 			txtMessageArray[i].setFont(new Font(15));
 			boxMessage.getChildren().add(txtMessageArray[i]);
 		}
-		ScrollPane barMessage= new ScrollPane();
+		ScrollPane barMessage = new ScrollPane();
 		barMessage.setContent(boxMessage);
 		
 		final double rootPadding = 20;
@@ -76,8 +76,8 @@ public abstract class DictUI extends Application {
 		rootPane.setPadding(
 			new Insets(rootPadding, rootPadding, rootPadding, rootPadding));
 		
-		ColumnConstraints column =
-			new ColumnConstraints(100, 100, Double.MAX_VALUE);
+		ColumnConstraints column = new ColumnConstraints(100, 100,
+			Double.MAX_VALUE);
 		column.setHgrow(Priority.ALWAYS);
 		rootPane.getColumnConstraints().addAll(column,
 			new ColumnConstraints(150));
