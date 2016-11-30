@@ -1,13 +1,17 @@
+package application.server;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 import java.security.*;
+import java.net.URLDecoder;
 
 class Search {
 	private int provider;
@@ -74,7 +78,7 @@ class Search {
 			isr.close();
 			is.close();
 
-			// 处理输出
+			// 澶勭悊杈撳嚭
 			meaning = arrangeOutput(builder.toString());
 			// meaning = builder.toString();
 
@@ -88,7 +92,7 @@ class Search {
 		}
 	}
 
-	// md5加密(baidu)
+	// md5鍔犲瘑(baidu)
 	private String getSign(String s) throws NoSuchAlgorithmException {
 		byte[] strByte = s.getBytes();
 		MessageDigest mdTemp = MessageDigest.getInstance("MD5");
@@ -105,7 +109,7 @@ class Search {
 		return new String(str);
 	}
 
-	private String arrangeOutput(String result) {
+	private String arrangeOutput(String result) throws UnsupportedEncodingException {
 		String output = "";
 		if (provider == 0) {
 			int p = 0;
@@ -115,7 +119,7 @@ class Search {
 			output += result.substring(17, q - 4) + "\n";
 			p = result.indexOf("explains");
 			q = result.indexOf("query");
-			output += result.substring(p + 12, q - 5) + "\n\n网络:\n";
+			output += result.substring(p + 12, q - 5) + "\n\n缃戠粶:\n";
 
 			p = result.indexOf("value");
 			q = result.indexOf("key");
@@ -124,16 +128,16 @@ class Search {
 
 			while (p <= last && p > 10) {
 				output += result.substring(q + 6, r) + "\n";
-				output += result.substring(p + 8, q - 3)+"\n\n";
+				output += result.substring(p + 8, q - 3) + "\n\n";
 
-				p = result.indexOf("value", p+1);
-				q = result.indexOf("key", q+1);
+				p = result.indexOf("value", p + 1);
+				q = result.indexOf("key", q + 1);
 				r = result.indexOf("\"", q + 6);
 			}
 
 		} else if (provider == 1) {
 			String[] tmp = result.split(":");
-			output += tmp[tmp.length - 1].substring(1, tmp[tmp.length - 1].length() - 4);
+			output = URLDecoder.decode(tmp[tmp.length - 1].substring(1, tmp[tmp.length - 1].length() - 4), "UTF-8");
 
 		} else if (provider == 2) {
 
