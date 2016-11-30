@@ -3,6 +3,7 @@ package application.server;
 
 import java.io.IOException;
 import java.net.Socket;
+import debug.Debug;
 import net.SocketStream;
 
 public class DictRespond extends Thread implements AutoCloseable {
@@ -16,17 +17,16 @@ public class DictRespond extends Thread implements AutoCloseable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (client == null) System.exit(0);
+		if (client == null) System.exit(Debug.ERROR_IO);
 	}
 	
 	@Override
 	public void run() {
-		System.out.println(client.readLine());
+		if (Debug.DEBUG) System.out.println("Server: Recv: " + client.readLine());
 	}
 	
 	@Override
 	public void close() {
-		System.out.println("Close");
 		client.close();
 	}
 }

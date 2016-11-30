@@ -2,6 +2,7 @@
 package application.client;
 
 import application.share.Connect;
+import debug.Debug;
 import java.io.*;
 import java.net.Socket;
 import javafx.stage.Stage;
@@ -18,10 +19,12 @@ public class DictEvent extends DictUI implements AutoCloseable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (server == null) System.exit(0);
+		if (server == null) System.exit(Debug.ERROR_IO);
 		
 		server.println("Hello server.");
-		System.exit(0);
+		if (Debug.DEBUG) System.out.println("Client: Send.");
+		
+		System.exit(Debug.ERROR_SUCCESS);
 		
 		// launch(args);
 	}
@@ -33,6 +36,6 @@ public class DictEvent extends DictUI implements AutoCloseable {
 	
 	@Override
 	public void close() {
-		if (server != null) server.close();
+		server.close();
 	}
 }
