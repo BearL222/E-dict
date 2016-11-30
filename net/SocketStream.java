@@ -33,5 +33,12 @@ public class SocketStream implements AutoCloseable {
 	}
 	
 	@Override
-	public void close() throws Exception {}
+	public void close() {
+		printer.close();
+		try {
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

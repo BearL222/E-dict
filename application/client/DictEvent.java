@@ -6,14 +6,14 @@ import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import javafx.stage.Stage;
+import net.SocketStream;
 
 public class DictEvent extends DictUI {
 	public static void main(String[] args) {
 		// launch(args);
-		try (Socket client = new Socket("127.0.0.1", Connect.SERVER_PORT)) {
-			PrintStream writer = new PrintStream(client.getOutputStream());
-			writer.println("Hello Socket");
-			// writer.flush();
+		try (SocketStream server = new SocketStream(
+			new Socket("127.0.0.1", Connect.SERVER_PORT))) {
+			server.println("Hello Socket");
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
