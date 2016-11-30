@@ -23,7 +23,7 @@ public class DictRespond extends Thread implements AutoCloseable {
 	public void run() {
 		System.out.println(client.readLine());
 	}
-
+	
 	@Override
 	public void close() {
 		System.out.println("Close");
