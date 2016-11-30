@@ -9,21 +9,24 @@ import javafx.stage.Stage;
 import net.SocketStream;
 
 public class DictEvent extends DictUI {
+	private SocketStream server = null;
+	
 	public static void main(String[] args) {
-		// launch(args);
+		launch(args);
+	}
+	
+	@Override
+	public void start(Stage primaryStage) throws Exception {
 		try (SocketStream server = new SocketStream(
 			new Socket("127.0.0.1", Connect.SERVER_PORT))) {
-			server.println("Hello Socket");
+			this.server = server;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.exit(0);
-	}
-	
-	@Override
-	public void start(Stage primaryStage) throws Exception {
+		if (this.server == null) System.exit(0);
+		
 		initializeComponent(primaryStage);
 	}
 }
