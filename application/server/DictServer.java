@@ -12,7 +12,9 @@ public class DictServer {
 		try (ServerSocket server = new ServerSocket(Connect.serverPort)) {
 			BufferedReader reader = new BufferedReader(
 				new InputStreamReader(server.accept().getInputStream()));
-			System.out.println(reader.readLine());
+			String s;
+			while ((s = reader.readLine()) == null);
+			System.out.println(s);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
