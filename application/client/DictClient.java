@@ -9,14 +9,14 @@ import java.net.Socket;
 import javafx.stage.Stage;
 import net.SocketStream;
 
-public class DictEvent extends DictUI implements AutoCloseable {
+public class DictClient extends DictUI implements AutoCloseable {
 	private static SocketStream server = null;
 	
 	public static void main(String[] args) {
 		try {
 			SocketStream server =
 				new SocketStream(new Socket("127.0.0.1", Connect.SERVER_PORT));
-			DictEvent.server = server;
+			DictClient.server = server;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
