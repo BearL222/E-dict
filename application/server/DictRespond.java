@@ -3,6 +3,8 @@ package application.server;
 
 import java.io.IOException;
 import java.net.Socket;
+
+import application.share.Convert;
 import debug.Debug;
 import net.SocketStream;
 
@@ -22,7 +24,14 @@ public class DictRespond extends Thread implements AutoCloseable {
 	
 	@Override
 	public void run() {
-		if (Debug.DEBUG) System.out.println("Server: Recv: " + client.readLine());
+		String[] msgRecv = Convert.getRecv(client.readLine());
+		if (Debug.DEBUG) System.out.println("Server: Recv: " + msgRecv[0]);
+		
+		String[] msgSend =
+			new String[] { new Search(0, msgRecv[0]).getMeaning(),
+				new Search(1, msgRecv[0]).getMeaning(),
+				new Search(2, msgRecv[0]).getMeaning() };
+		client.println(Convert.getSend(msgSend));
 	}
 	
 	@Override

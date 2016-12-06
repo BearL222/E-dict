@@ -2,6 +2,7 @@
 package application.client;
 
 import application.share.Connect;
+import application.share.Convert;
 import debug.Debug;
 import java.io.*;
 import java.net.Socket;
@@ -13,16 +14,22 @@ public class DictEvent extends DictUI implements AutoCloseable {
 	
 	public static void main(String[] args) {
 		try {
-			SocketStream server = new SocketStream(
-				new Socket("127.0.0.1", Connect.SERVER_PORT));
+			SocketStream server =
+				new SocketStream(new Socket("127.0.0.1", Connect.SERVER_PORT));
 			DictEvent.server = server;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		if (server == null) System.exit(Debug.ERROR_IO);
 		
-		server.println("Hello server.");
-		if (Debug.DEBUG) System.out.println("Client: Send.");
+		String[] msgSend = new String[] { "apple" };
+		server.println(Convert.getSend(msgSend));
+		if (Debug.DEBUG) System.out.println("Hello server.");
+		
+		String[] msgRecv = Convert.getRecv(server.readLine());
+		System.out.println(msgRecv[0]);
+		System.out.println(msgRecv[1]);
+		System.out.println(msgRecv[2]);
 		
 		System.exit(Debug.ERROR_SUCCESS);
 		
