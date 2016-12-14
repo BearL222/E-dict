@@ -21,9 +21,11 @@ public abstract class DictUI extends Application {
 	final Card[] cardArray = new Card[DictInfo.info.length];
 	final CheckBox[] chkDictArray = new CheckBox[DictInfo.info.length];
 	
+	protected abstract void btnSearch(String s);
+	
 	boolean txtInputGotFocused = false;
 	
-	private void updateCards() {
+	protected void updateCards() {
 		List<Card> cardShowList = new LinkedList<>();
 		
 		int cardLen = 0;
@@ -59,6 +61,7 @@ public abstract class DictUI extends Application {
 		
 		Button btnSearch = new Button("S");
 		btnSearch.setMinSize(30, 30);
+		btnSearch.setOnMouseClicked(o -> btnSearch(txtInput.getText()));
 		Button btnShare = new Button("S");
 		btnShare.setMinSize(30, 30);
 		Button btnUser = new Button("U");

@@ -1,5 +1,5 @@
 
-package application.share;
+package net;
 
 public final class Convert {
 	public static String[] getRecv(String strRead) {

@@ -11,7 +11,7 @@ public class DictInfo {
 	}
 	
 	public static Info[] info = new Info[]{
-		new Info("百度百度百度百度百度百度百度百度百度百度百度百度百度百度"),
+		new Info("百度"),
 		new Info("有道"),
 		new Info("金山")
 	};
