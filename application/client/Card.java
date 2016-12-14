@@ -21,14 +21,19 @@ class Card extends GridPane implements Comparable<Card> {
 		lblMsg.setFont(new Font(15));
 		btnLike = new Button(new Integer(numLike = like).toString());
 		
-		getColumnConstraints().addAll(col,new ColumnConstraints(30));
-		getRowConstraints().addAll(new RowConstraints(30),row);
+		getColumnConstraints().addAll(col, new ColumnConstraints(30));
+		getRowConstraints().addAll(new RowConstraints(30), row);
 		
 		add(lblDict, 0, 0, 1, 1);
 		add(btnLike, 1, 0, 1, 1);
 		add(lblMsg, 0, 1, 2, 1);
 		
 		setPrefWidth(Double.MAX_VALUE);
+	}
+	
+	public void setCard(String msg, int like) {
+		lblMsg.setText(msg);
+		btnLike.setText(new Integer(numLike = like).toString());
 	}
 	
 	private static ColumnConstraints col =

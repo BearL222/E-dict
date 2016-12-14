@@ -238,4 +238,11 @@ public abstract class DictUI extends Application {
 		// primaryStage.show();
 	}
 	
+	void setCardsMsg(String[] msgRecv) {
+		for (int i = 0; i < cardArray.length; ++i) {
+			cardArray[i].setCard(msgRecv[i * 2],
+				Integer.parseInt(msgRecv[i * 2 + 1]));
+		}
+	}
+	
 }

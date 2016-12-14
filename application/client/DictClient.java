@@ -2,7 +2,7 @@
 package application.client;
 
 import application.share.Connect;
-import application.share.Convert;
+import application.share.DictInfo;
 import debug.Debug;
 import net.SocketStream;
 
@@ -24,10 +24,10 @@ public class DictClient extends DictUI implements AutoCloseable {
 		if (server == null) System.exit(Debug.ERROR_IO);
 		
 		String[] msgSend = new String[] { "apple" };
-		server.println(Convert.getSend(msgSend));
+		server.printArray(msgSend);
 		if (Debug.DEBUG) System.out.println("Hello server.");
 		
-		String[] msgRecv = Convert.getRecv(server.readLine());
+		String[] msgRecv = server.readArray();
 		System.out.println(msgRecv[0]);
 		System.out.println(msgRecv[1]);
 		System.out.println(msgRecv[2]);
@@ -48,11 +48,10 @@ public class DictClient extends DictUI implements AutoCloseable {
 	
 	@Override
 	protected void btnSearch(String s) {
-		String[] msgRecv = Convert.getRecv(
-			server.readLine(Convert.getSend(new String[] { "Search", s })));
+		String[] msgRecv = server.readArray(new String[] { "Search", s });
 		
-		if (msgRecv.length > 0) {
-			
+		if (msgRecv.length == DictInfo.info.length * 2) {
+			setCardsMsg(msgRecv);
 		}
 	}
 }
