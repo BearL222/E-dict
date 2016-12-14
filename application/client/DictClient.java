@@ -31,9 +31,10 @@ public class DictClient extends DictUI implements AutoCloseable {
 		System.out.println(msgRecv[1]);
 		System.out.println(msgRecv[2]);
 		
+		launch(args);
+		
 		System.exit(Debug.ERROR_SUCCESS);
 		
-		// launch(args);
 	}
 	
 	@Override
