@@ -23,6 +23,11 @@ public class SocketStream implements AutoCloseable {
 		return null;
 	}
 	
+	public String readLine(String str) {
+		println(str);
+		return readLine();
+	}
+	
 	public void print(String str) {
 		printer.print(str);
 	}
