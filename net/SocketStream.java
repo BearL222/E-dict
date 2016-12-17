@@ -44,6 +44,9 @@ public class SocketStream implements AutoCloseable {
 		return Convert.getRecv(readLine());
 	}
 	
+	/*
+	 * @param: 发送字符串数组msg到服务器并接收服务器应答的字符串数组
+	 */
 	public String[] readArray(String[] msg) {
 		printArray(msg);
 		return readArray();

@@ -2,5 +2,5 @@
 package application.share;
 
 public class Connect {
-	public static final int SERVER_PORT = 10000;
+	public static final int SERVER_PORT = 30000;
 }

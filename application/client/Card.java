@@ -9,7 +9,7 @@ import javafx.scene.text.Font;
 
 class Card extends GridPane implements Comparable<Card> {
 	private final Label lblDict;
-	private final Label lblMsg;
+	private final TextArea txtMsg;
 	private final Button btnLike;
 	private Integer numLike;
 	
@@ -17,8 +17,9 @@ class Card extends GridPane implements Comparable<Card> {
 		super();
 		
 		lblDict = new Label(DictInfo.info[dictIndex].name);
-		lblMsg = new Label(msg);
-		lblMsg.setFont(new Font(15));
+		txtMsg = new TextArea(msg);
+		txtMsg.setFont(new Font(15));
+		txtMsg.setMaxHeight(Double.MAX_VALUE);
 		btnLike = new Button(new Integer(numLike = like).toString());
 		
 		getColumnConstraints().addAll(col, new ColumnConstraints(30));
@@ -26,13 +27,13 @@ class Card extends GridPane implements Comparable<Card> {
 		
 		add(lblDict, 0, 0, 1, 1);
 		add(btnLike, 1, 0, 1, 1);
-		add(lblMsg, 0, 1, 2, 1);
+		add(txtMsg, 0, 1, 2, 1);
 		
 		setPrefWidth(Double.MAX_VALUE);
 	}
 	
 	public void setCard(String msg, int like) {
-		lblMsg.setText(msg);
+		txtMsg.setText(msg);
 		btnLike.setText(new Integer(numLike = like).toString());
 	}
 	
