@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -28,7 +29,7 @@ public class SignUI extends Application {
 		TextField name = new TextField("");
 		namePane.setLeft(new Label("用户名  "));
 		namePane.setCenter(name);
-		TextField passcode = new TextField("");
+		PasswordField passcode = new PasswordField();
 		codePane.setLeft(new Label("密码     "));
 		codePane.setCenter(passcode);
 
