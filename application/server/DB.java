@@ -1,6 +1,7 @@
 package application.server;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 class DB {
 	private String sqlName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -73,7 +74,7 @@ class DB {
 		return result;
 	}
 
-	//用户下线
+	// 用户下线
 	public int signoutUser(String name) throws SQLException {
 		int result = 0;
 		Connection connection = DriverManager.getConnection(url, user, password);
@@ -83,7 +84,7 @@ class DB {
 		connection.close();
 		return result;
 	}
-	
+
 	// 用户注册（返回：0：注册成功；1：用户名已被占用）
 	public int signupUser(String name, String passcode) throws SQLException {
 		int result = 0;
@@ -103,4 +104,21 @@ class DB {
 		connection.close();
 		return result;
 	}
+
+	// 返回所有在线用户，保存为String数组
+	public String[] getOnlineUser() throws SQLException {
+
+		Connection connection = DriverManager.getConnection(url, user, password);
+		Statement statement = connection.createStatement();
+
+		ResultSet resultSet = statement.executeQuery("SELECT UNAME FROM USER_INFO WHERE ONLINE = 1");
+		ArrayList<String> result=new ArrayList<String>();
+
+		while (resultSet.next()) {
+			result.add(resultSet.getString(1));
+		}
+
+		return result.toArray(new String[result.size()]);
+	}
+	
 }
