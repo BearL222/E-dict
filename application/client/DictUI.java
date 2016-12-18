@@ -4,7 +4,6 @@ package application.client;
 
 import application.share.DictInfo;
 
-import java.util.Arrays;
 import java.util.*;
 
 import javafx.application.Application;
@@ -16,7 +15,7 @@ import javafx.stage.Stage;
 import net.SocketStream;
 
 public abstract class DictUI extends Application {
-
+	
 	protected static SocketStream server = null;
 	
 	final TextField txtInput = new TextField("");
@@ -25,6 +24,8 @@ public abstract class DictUI extends Application {
 	final CheckBox[] chkDictArray = new CheckBox[DictInfo.info.length];
 	
 	protected abstract void btnSearch(String s);
+	
+	protected abstract void btnShare();
 	
 	protected abstract void btnUser();
 	
@@ -42,7 +43,9 @@ public abstract class DictUI extends Application {
 		}
 		
 		if (cardLen == 0) {
-			cardShowList = Arrays.asList(cardArray);
+			for (int i = 0; i < cardArray.length; ++i) {
+				cardShowList.add(cardArray[i]);
+			}
 		}
 		cardShowList.sort(null);
 		
@@ -69,6 +72,7 @@ public abstract class DictUI extends Application {
 		btnSearch.setOnMouseClicked(o -> btnSearch(txtInput.getText()));
 		Button btnShare = new Button("S");
 		btnShare.setMinSize(30, 30);
+		btnShare.setOnMouseClicked(o -> btnShare());
 		Button btnUser = new Button("U");
 		btnUser.setMinSize(30, 30);
 		btnUser.setOnMouseClicked(o -> btnUser());
@@ -100,7 +104,7 @@ public abstract class DictUI extends Application {
 		boxCards.setPadding(new Insets(boxCardsInset, boxCardsInset,
 			boxCardsInset, boxCardsInset));
 		boxCards.setSpacing(20);
-		updateCards();
+		// updateCards();
 		
 		ScrollPane scrlCards = new ScrollPane();
 		scrlCards.setFitToWidth(true);

@@ -49,13 +49,25 @@ public class DictRespond extends Thread implements AutoCloseable {
 								new Search(2, word).getMeaning(), "12" });
 						
 					} else if (msgRecv[0].compareTo("AddLike") == 0) {
-						sql.setZan(Integer.parseInt(msgRecv[1]), word);
+						int dictIndex = Integer.parseInt(msgRecv[1]);
+						sql.setZan(dictIndex, word);
+						client.printArray(new String[] {
+							sql.getZan(dictIndex, word).toString() });
 						
 					} else if (msgRecv[0].compareTo("SignIn") == 0) {
+						client.printArray(new String[] { sql
+							.signinUser(msgRecv[1], msgRecv[2]).toString() });
 						
 					} else if (msgRecv[0].compareTo("SignUp") == 0) {
+						client.printArray(new String[] { sql
+							.signupUser(msgRecv[1], msgRecv[2]).toString() });
 						
 					} else if (msgRecv[0].compareTo("SignOut") == 0) {
+						client.printArray(new String[] {
+							sql.signoutUser(msgRecv[1]).toString() });
+						
+					} else if (msgRecv[0].compareTo("GetUser") == 0) {
+						client.printArray(sql.getOnlineUser());
 						
 					}
 				}

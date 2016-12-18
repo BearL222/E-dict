@@ -51,11 +51,17 @@ public class DictClient extends DictUI implements AutoCloseable {
 		if (msgRecv.length == DictInfo.info.length * 2) {
 			setCardsMsg(msgRecv);
 		}
+		updateCards();
 	}
 	
 	@Override
 	protected void btnUser() {
 		new SignUI(server).start();
+	}
+
+	@Override
+	protected void btnShare() {
+		new ShareUI(server);
 	}
 
 }

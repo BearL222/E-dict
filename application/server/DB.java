@@ -29,7 +29,7 @@ class DB {
 	}
 
 	// 返回该单词赞数
-	public int getZan(int dict, String word) throws SQLException {
+	public Integer getZan(int dict, String word) throws SQLException {
 		int result;
 
 		// 建立连接
@@ -49,7 +49,7 @@ class DB {
 	}
 
 	// 用户登陆（返回：0：成功登陆；1：密码错误；2：用户不存在）
-	public int signinUser(String name, String passcode) throws SQLException {
+	public Integer signinUser(String name, String passcode) throws SQLException {
 		int result = 0;
 		Connection connection = DriverManager.getConnection(url, user, password);
 		Statement statement = connection.createStatement();
@@ -75,7 +75,7 @@ class DB {
 	}
 
 	// 用户下线
-	public int signoutUser(String name) throws SQLException {
+	public Integer signoutUser(String name) throws SQLException {
 		int result = 0;
 		Connection connection = DriverManager.getConnection(url, user, password);
 		Statement statement = connection.createStatement();
@@ -86,7 +86,7 @@ class DB {
 	}
 
 	// 用户注册（返回：0：注册成功；1：用户名已被占用）
-	public int signupUser(String name, String passcode) throws SQLException {
+	public Integer signupUser(String name, String passcode) throws SQLException {
 		int result = 0;
 		Connection connection = DriverManager.getConnection(url, user, password);
 		Statement statement = connection.createStatement();

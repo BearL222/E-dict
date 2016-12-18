@@ -2,11 +2,11 @@
 package application.client;
 
 import application.share.*;
+import net.SocketStream;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import net.SocketStream;
 
 class Card extends GridPane implements Comparable<Card> {
 	private final Integer dictIndex;
@@ -30,11 +30,9 @@ class Card extends GridPane implements Comparable<Card> {
 		btnLike = new Button(new Integer(numLike = like).toString());
 		btnLike.setFont(new Font(10));
 		btnLike.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		btnLike.setOnMouseClicked(e->{
-			server.printArray(new String[]{
-				"AddLike",
-				dictIndex.toString(),
-			});
+		btnLike.setOnMouseClicked(e -> {
+			server
+				.printArray(new String[] { "AddLike", dictIndex.toString(), });
 		});
 		
 		super.setVgap(5);
@@ -49,6 +47,7 @@ class Card extends GridPane implements Comparable<Card> {
 	}
 	
 	public void setCard(String msg, int like) {
+		// if (Debug.DEBUG) System.out.println(msg);
 		txtMsg.setText(msg);
 		btnLike.setText(new Integer(numLike = like).toString());
 	}
@@ -62,7 +61,7 @@ class Card extends GridPane implements Comparable<Card> {
 	
 	@Override
 	public int compareTo(Card rhs) {
-		int result = numLike.compareTo(rhs.numLike);
+		int result = - numLike.compareTo(rhs.numLike);
 		return result == 0 ? dictIndex.compareTo(rhs.dictIndex) : result;
 	}
 	
