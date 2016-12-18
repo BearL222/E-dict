@@ -51,7 +51,7 @@ public class SignUI {
 		});
 		
 		Button signOut =
-			new Button("Sign up"/* , new ImageView("image/signup.png") */);
+			new Button("Sign out"/* , new ImageView("image/signup.png") */);
 		signOut.setOnMouseClicked(e -> {
 			server.printArray(new String[] { "SignOut", name.getText(), });
 		});
@@ -61,12 +61,13 @@ public class SignUI {
 		basePane.add(codePane, 0, 2);
 		basePane.add(signIn, 0, 3);
 		basePane.add(signUp, 0, 4);
+		basePane.add(signOut, 0, 5);
 		
 		Scene scene = new Scene(basePane);
 		primaryStage.setTitle("登录/注册");
 		primaryStage.setScene(scene);
 		primaryStage.setWidth(300);
-		primaryStage.setHeight(150);
+		primaryStage.setHeight(185);
 		primaryStage.show();
 		primaryStage.setResizable(false);
 		

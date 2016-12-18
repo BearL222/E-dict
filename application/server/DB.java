@@ -13,7 +13,7 @@ class DB {
 		Class.forName(sqlName);
 	}
 
-	// 修改单词赞数信息
+	// 增加单词赞数
 	public void setZan(int dict, String word) throws SQLException {
 		Connection connection = DriverManager.getConnection(url, user, password);
 		Statement statement = connection.createStatement();
@@ -25,7 +25,20 @@ class DB {
 		}
 		statement.executeUpdate("UPDATE ZAN SET ZAN" + dict + " = ZAN" + dict + " +1" + " WHERE WORD=\'" + word + "\'");
 		connection.close();
+	}
 
+	// 取消赞
+	public void unZan(int dict, String word) throws SQLException {
+		Connection connection = DriverManager.getConnection(url, user, password);
+		Statement statement = connection.createStatement();
+
+		ResultSet resultSet = statement.executeQuery("SELECT * FROM ZAN WHERE WORD = \'" + word + "\'");
+		// 存有该单词
+		if (resultSet.next()) {
+			statement.executeUpdate(
+					"UPDATE ZAN SET ZAN" + dict + " = ZAN" + dict + " -1" + " WHERE WORD=\'" + word + "\'");
+		}
+		connection.close();
 	}
 
 	// 返回该单词赞数
@@ -39,7 +52,7 @@ class DB {
 		ResultSet resultSet = statement.executeQuery("SELECT ZAN" + dict + " FROM ZAN WHERE WORD = \'" + word + "\'");
 
 		if (!resultSet.next()) {
-			result = -1;
+			result = 0;
 		} else {
 			result = Integer.valueOf(resultSet.getString(1));
 		}
@@ -112,7 +125,7 @@ class DB {
 		Statement statement = connection.createStatement();
 
 		ResultSet resultSet = statement.executeQuery("SELECT UNAME FROM USER_INFO WHERE ONLINE = 1");
-		ArrayList<String> result=new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
 
 		while (resultSet.next()) {
 			result.add(resultSet.getString(1));
@@ -120,5 +133,42 @@ class DB {
 
 		return result.toArray(new String[result.size()]);
 	}
-	
+
+	// 返回所有离线用户，保存为String数组
+	public String[] getOfflineUser() throws SQLException {
+
+		Connection connection = DriverManager.getConnection(url, user, password);
+		Statement statement = connection.createStatement();
+
+		ResultSet resultSet = statement.executeQuery("SELECT UNAME FROM USER_INFO WHERE ONLINE = 0");
+		ArrayList<String> result = new ArrayList<String>();
+
+		while (resultSet.next()) {
+			result.add(resultSet.getString(1));
+		}
+
+		return result.toArray(new String[result.size()]);
+	}
+
+	// 获得某用户收到的单词
+	public String[][] getShareWord(String name) throws SQLException {
+		Connection connection = DriverManager.getConnection(url, user, password);
+		Statement statement = connection.createStatement();
+
+		ResultSet resultSet = statement.executeQuery("SELECT UNAME1,WORD FROM WORD_CARD WHERE UNAME2 = " + name);
+		ArrayList<String> result_sender = new ArrayList<String>();
+		ArrayList<String> result_word = new ArrayList<String>();
+
+		while (resultSet.next()) {
+			result_sender.add(resultSet.getString(1));
+			result_word.add(resultSet.getString(2));
+		}
+		String[][] result = new String[result_sender.size()][2];
+		for (int i = 0; i < result_sender.size(); i++) {
+			result[i][0] = result_sender.get(i);
+			result[i][1] = result_word.get(i);
+		}
+
+		return result;
+	}
 }

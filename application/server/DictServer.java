@@ -11,7 +11,12 @@ public class DictServer {
 	public static void main(String[] args) {
 		try (ServerSocket server = new ServerSocket(Connect.SERVER_PORT)) {
 			while (true) /*for (int i = 0; i < 10; ++i)*/ {
-				new DictRespond(server.accept(), null/*new DB()*/).run();
+				try {
+					new DictRespond(server.accept(), new DB()).run();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
