@@ -15,19 +15,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public abstract class DictUI extends Application {
-
+	
 	final TextField txtInput = new TextField("");
 	final VBox boxCards = new VBox();
 	final Card[] cardArray = new Card[DictInfo.info.length];
 	final CheckBox[] chkDictArray = new CheckBox[DictInfo.info.length];
-
+	
 	protected abstract void btnSearch(String s);
-
+	
 	boolean txtInputGotFocused = false;
-
+	
 	protected void updateCards() {
 		List<Card> cardShowList = new LinkedList<>();
-
+		
 		int cardLen = 0;
 		for (int i = 0; i < cardArray.length; ++i) {
 			if (chkDictArray[i].isSelected()) {
@@ -35,18 +35,18 @@ public abstract class DictUI extends Application {
 				++cardLen;
 			}
 		}
-
+		
 		if (cardLen == 0) {
 			cardShowList = Arrays.asList(cardArray);
 		}
 		cardShowList.sort(null);
-
+		
 		boxCards.getChildren().clear();
 		boxCards.getChildren().addAll(cardShowList);
 	}
-
+	
 	public void initializeComponent(final Stage primaryStage) {
-
+		
 		txtInput.setMaxHeight(Double.MAX_VALUE);
 		txtInput.setPromptText("Enter your word.");
 		txtInput.focusedProperty().addListener((o, b1, b2) -> {
@@ -58,7 +58,7 @@ public abstract class DictUI extends Application {
 				txtInputGotFocused = false;
 			}
 		});
-
+		
 		Button btnSearch = new Button("S");
 		btnSearch.setMinSize(30, 30);
 		btnSearch.setOnMouseClicked(o -> btnSearch(txtInput.getText()));
@@ -66,33 +66,36 @@ public abstract class DictUI extends Application {
 		btnShare.setMinSize(30, 30);
 		Button btnUser = new Button("U");
 		btnUser.setMinSize(30, 30);
-
+		
 		HBox boxInput = new HBox();
 		boxInput.setSpacing(20);
 		HBox.setHgrow(txtInput, Priority.ALWAYS);
 		boxInput.getChildren().addAll(txtInput, btnSearch, btnShare, btnUser);
 		boxInput.setMinHeight(30);
-
+		
 		for (int i = 0; i < chkDictArray.length; ++i) {
 			chkDictArray[i] = new CheckBox(DictInfo.info[i].name);
 			chkDictArray[i].setMinWidth(60);
-			chkDictArray[i].selectedProperty().addListener((o, t1, t2) -> updateCards());
+			chkDictArray[i].selectedProperty()
+				.addListener((o, t1, t2) -> updateCards());
 		}
-
+		
 		HBox boxDict = new HBox();
 		boxDict.setSpacing(10);
 		boxDict.getChildren().addAll(chkDictArray);
-
+		
 		for (int i = 0; i < cardArray.length; ++i) {
-			cardArray[i] = new Card(i, DictInfo.info[i].name, i);
+			cardArray[i] =
+				new Card(i, DictInfo.info[i].name + "1\n" + DictInfo.info[i].name
+					+ "2\n", i);
 		}
-
+		
 		updateCards();
-
+		
 		ScrollPane scrlCards = new ScrollPane();
 		scrlCards.setFitToWidth(true);
 		scrlCards.setContent(boxCards);
-
+		
 		// Button[] btnSignArray = new Button[3];
 		// btnSignArray[0] = new Button("Sign in");
 		// btnSignArray[1] = new Button("Sign up");
@@ -150,21 +153,22 @@ public abstract class DictUI extends Application {
 		// rootPane.add(boxSign, 0, 1, 2, 1);
 		// rootPane.add(boxSelect, 0, 2, 2, 1);
 		// rootPane.add(barMessage, 0, 3, 2, 1);
-
+		
 		VBox boxRoot = new VBox();
 		double boxRootInset = 20;
-		boxRoot.setPadding(new Insets(boxRootInset, boxRootInset, boxRootInset, boxRootInset));
+		boxRoot.setPadding(
+			new Insets(boxRootInset, boxRootInset, boxRootInset, boxRootInset));
 		boxRoot.setSpacing(20);
 		VBox.setVgrow(scrlCards, Priority.ALWAYS);
 		boxRoot.getChildren().addAll(boxInput, boxDict, scrlCards);
-
+		
 		primaryStage.setTitle("E-dict");
 		primaryStage.setScene(new Scene(boxRoot, 800, 600));
 		primaryStage.setMinWidth(400);
 		primaryStage.setMinHeight(300);
 		primaryStage.show();
 		// primaryStage.setResizable(false);
-
+		
 		// BorderPane basicPane = new BorderPane();
 		// BorderPane leftPane = new BorderPane();
 		// GridPane rightPane = new GridPane();
@@ -236,11 +240,12 @@ public abstract class DictUI extends Application {
 		// primaryStage.setScene(scene);
 		// primaryStage.show();
 	}
-
+	
 	void setCardsMsg(String[] msgRecv) {
 		for (int i = 0; i < cardArray.length; ++i) {
-			cardArray[i].setCard(msgRecv[i * 2], Integer.parseInt(msgRecv[i * 2 + 1]));
+			cardArray[i].setCard(msgRecv[i * 2],
+				Integer.parseInt(msgRecv[i * 2 + 1]));
 		}
 	}
-
+	
 }
