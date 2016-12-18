@@ -11,8 +11,6 @@ import java.net.Socket;
 import javafx.stage.Stage;
 
 public class DictClient extends DictUI implements AutoCloseable {
-	private static SocketStream server = null;
-	
 	public static void main(String[] args) {
 		try {
 			SocketStream server =
@@ -54,4 +52,10 @@ public class DictClient extends DictUI implements AutoCloseable {
 			setCardsMsg(msgRecv);
 		}
 	}
+	
+	@Override
+	protected void btnUser() {
+		new SignUI(server).start();
+	}
+
 }

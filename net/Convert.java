@@ -3,10 +3,12 @@ package net;
 
 public final class Convert {
 	public static String[] getRecv(String strRead) {
+		if (strRead == null) return null;
 		return strRead.replaceAll("<br>", "\n").split("\\\\n");
 	}
 	
 	public static String getSend(String[] strPrint) {
+		if (strPrint == null) return null;
 		return String.join("\\n", strPrint).replaceAll("\\r\\n?", "\n")
 			.replaceAll("\\n", "<br>");
 	}

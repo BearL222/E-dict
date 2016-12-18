@@ -13,8 +13,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import net.SocketStream;
 
 public abstract class DictUI extends Application {
+
+	protected static SocketStream server = null;
 	
 	final TextField txtInput = new TextField("");
 	final VBox boxCards = new VBox();
@@ -22,6 +25,8 @@ public abstract class DictUI extends Application {
 	final CheckBox[] chkDictArray = new CheckBox[DictInfo.info.length];
 	
 	protected abstract void btnSearch(String s);
+	
+	protected abstract void btnUser();
 	
 	boolean txtInputGotFocused = false;
 	
@@ -66,6 +71,7 @@ public abstract class DictUI extends Application {
 		btnShare.setMinSize(30, 30);
 		Button btnUser = new Button("U");
 		btnUser.setMinSize(30, 30);
+		btnUser.setOnMouseClicked(o -> btnUser());
 		
 		HBox boxInput = new HBox();
 		boxInput.setSpacing(20);
@@ -85,11 +91,15 @@ public abstract class DictUI extends Application {
 		boxDict.getChildren().addAll(chkDictArray);
 		
 		for (int i = 0; i < cardArray.length; ++i) {
-			cardArray[i] =
-				new Card(i, DictInfo.info[i].name + "1\n" + DictInfo.info[i].name
-					+ "2\n", i);
+			cardArray[i] = new Card(server, i,
+				DictInfo.info[i].name + "1\n" + DictInfo.info[i].name + "2\n",
+				i);
 		}
 		
+		double boxCardsInset = 10;
+		boxCards.setPadding(new Insets(boxCardsInset, boxCardsInset,
+			boxCardsInset, boxCardsInset));
+		boxCards.setSpacing(20);
 		updateCards();
 		
 		ScrollPane scrlCards = new ScrollPane();

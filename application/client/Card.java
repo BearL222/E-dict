@@ -6,6 +6,7 @@ import application.share.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import net.SocketStream;
 
 class Card extends GridPane implements Comparable<Card> {
 	private final Integer dictIndex;
@@ -14,20 +15,32 @@ class Card extends GridPane implements Comparable<Card> {
 	private final Button btnLike;
 	private Integer numLike;
 	
-	public Card(int index, String msg, int like) {
+	public Card(SocketStream server, int index, String msg, int like) {
 		super();
 		
 		dictIndex = index;
 		lblDict = new Label(DictInfo.info[dictIndex].name);
+		
 		txtMsg = new TextArea(msg);
 		txtMsg.setPrefRowCount((txtMsg.getText() + " ").split("\n").length);
 		txtMsg.textProperty().addListener((o, s1, s2) -> txtMsg
 			.setPrefRowCount((txtMsg.getText() + " ").split("\n").length));
 		txtMsg.setFont(new Font(15));
+		
 		btnLike = new Button(new Integer(numLike = like).toString());
+		btnLike.setFont(new Font(10));
+		btnLike.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		btnLike.setOnMouseClicked(e->{
+			server.printArray(new String[]{
+				"AddLike",
+				dictIndex.toString(),
+			});
+		});
+		
+		super.setVgap(5);
 		
 		super.getColumnConstraints().addAll(col, new ColumnConstraints(30));
-		super.getRowConstraints().addAll(new RowConstraints(40), row);
+		super.getRowConstraints().addAll(new RowConstraints(30), row);
 		
 		super.add(lblDict, 0, 0, 1, 1);
 		super.add(btnLike, 1, 0, 1, 1);

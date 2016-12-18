@@ -26,9 +26,9 @@ public class SocketStream implements AutoCloseable {
 		try {
 			return reader.readLine();
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
-		return "";
+		return null;
 	}
 	
 	public String readLine(String str) {
