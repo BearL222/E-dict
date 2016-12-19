@@ -8,10 +8,15 @@ import net.SocketStream;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Arrays;
+
 import javafx.stage.Stage;
 
 public class DictClient extends DictUI implements AutoCloseable {
 	public static void main(String[] args) {
+		if (Debug.DEBUG) System.out.println(System.getProperty("user.dir"));
+		if (Debug.DEBUG) System.out.println(Arrays.toString(args));
+
 		try {
 			SocketStream server =
 				new SocketStream(new Socket("127.0.0.1", Connect.SERVER_PORT));
@@ -56,12 +61,13 @@ public class DictClient extends DictUI implements AutoCloseable {
 	
 	@Override
 	protected void btnUser() {
-		new SignUI(server).start();
+		new SignUI(server, lblUser).start();
 	}
 
+	
 	@Override
 	protected void btnShare() {
-		new ShareUI(server);
+		new ShareUI(server, lblUser.getText(), txtInput);
 	}
 
 }

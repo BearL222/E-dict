@@ -9,6 +9,7 @@ import java.util.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -18,6 +19,7 @@ public abstract class DictUI extends Application {
 	
 	protected static SocketStream server = null;
 	
+	final Label lblUser = new Label("");
 	final TextField txtInput = new TextField("");
 	final VBox boxCards = new VBox();
 	final Card[] cardArray = new Card[DictInfo.info.length];
@@ -67,15 +69,24 @@ public abstract class DictUI extends Application {
 			}
 		});
 		
-		Button btnSearch = new Button("S");
+		Button btnSearch = new Button("", new ImageView("/image/Search.png"));
 		btnSearch.setMinSize(30, 30);
+		btnSearch.setPrefSize(30, 30);
 		btnSearch.setOnMouseClicked(o -> btnSearch(txtInput.getText()));
-		Button btnShare = new Button("S");
+		Button btnShare = new Button("", new ImageView("/image/Share.png"));
 		btnShare.setMinSize(30, 30);
+		btnShare.setPrefSize(30, 30);
 		btnShare.setOnMouseClicked(o -> btnShare());
-		Button btnUser = new Button("U");
+		Button btnUser = new Button("", new ImageView("/image/User.png"));
 		btnUser.setMinSize(30, 30);
+		btnUser.setPrefSize(30, 30);
 		btnUser.setOnMouseClicked(o -> btnUser());
+		
+		lblUser.textProperty().addListener((o, s1, s2) -> {
+			if (s2.compareTo("") == 0) {
+				btnShare.setDisable(false);
+			}
+		});
 		
 		HBox boxInput = new HBox();
 		boxInput.setSpacing(20);
@@ -174,7 +185,7 @@ public abstract class DictUI extends Application {
 			new Insets(boxRootInset, boxRootInset, boxRootInset, boxRootInset));
 		boxRoot.setSpacing(20);
 		VBox.setVgrow(scrlCards, Priority.ALWAYS);
-		boxRoot.getChildren().addAll(boxInput, boxDict, scrlCards);
+		boxRoot.getChildren().addAll(lblUser, boxInput, boxDict, scrlCards);
 		
 		primaryStage.setTitle("E-dict");
 		primaryStage.setScene(new Scene(boxRoot, 800, 600));
@@ -258,7 +269,8 @@ public abstract class DictUI extends Application {
 	void setCardsMsg(String[] msgRecv) {
 		for (int i = 0; i < cardArray.length; ++i) {
 			cardArray[i].setCard(msgRecv[i * 2],
-				Integer.parseInt(msgRecv[i * 2 + 1]));
+				Integer.parseInt(msgRecv[i * 2 + 1]),
+				Boolean.parseBoolean(msgRecv[i * 2 + 2]));
 		}
 	}
 	
