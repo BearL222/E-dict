@@ -53,7 +53,7 @@ public class DictClient extends DictUI implements AutoCloseable {
 	protected void btnSearch(String s) {
 		String[] msgRecv = server.readArray(new String[] { "Search", s });
 		
-		if (msgRecv.length == DictInfo.info.length * 2) {
+		if (msgRecv.length == DictInfo.info.length * 3) {
 			setCardsMsg(msgRecv);
 		}
 		updateCards();

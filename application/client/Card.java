@@ -10,8 +10,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 class Card extends GridPane implements Comparable<Card> {
-	private static final ImageView likeR = new ImageView("/image/LikeR.png");
-	private static final ImageView likeB = new ImageView("/image/LikeB.png");
+	private static final String likeR = new String("/image/LikeR.png");
+	private static final String likeB = new String("/image/LikeB.png");
 	
 	private final Integer dictIndex;
 	private final Label lblDict;
@@ -39,7 +39,7 @@ class Card extends GridPane implements Comparable<Card> {
 				.readArray(new String[] { "Like", dictIndex.toString(), });
 			btnLike.setText(msgRecv[0]);
 			btnLike
-				.setGraphic(Boolean.parseBoolean(msgRecv[1]) ? likeR : likeB);
+				.setGraphic(Boolean.parseBoolean(msgRecv[1]) ? new ImageView(likeR) : new ImageView(likeB));
 		});
 		
 		super.setVgap(5);
@@ -57,7 +57,7 @@ class Card extends GridPane implements Comparable<Card> {
 		// if (Debug.DEBUG) System.out.println(msg);
 		txtMsg.setText(msg);
 		btnLike.setText(new Integer(numLike = like).toString());
-		btnLike.setGraphic(color ? likeR : likeB);
+		btnLike.setGraphic(color ? new ImageView(likeR) : new ImageView(likeB));
 	}
 	
 	private static ColumnConstraints col =

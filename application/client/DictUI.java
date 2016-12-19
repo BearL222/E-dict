@@ -268,9 +268,9 @@ public abstract class DictUI extends Application {
 	
 	void setCardsMsg(String[] msgRecv) {
 		for (int i = 0; i < cardArray.length; ++i) {
-			cardArray[i].setCard(msgRecv[i * 2],
-				Integer.parseInt(msgRecv[i * 2 + 1]),
-				Boolean.parseBoolean(msgRecv[i * 2 + 2]));
+			cardArray[i].setCard(msgRecv[i * 3],
+				Integer.parseInt(msgRecv[i * 3 + 1]),
+				Boolean.parseBoolean(msgRecv[i * 3 + 2]));
 		}
 	}
 	

@@ -48,6 +48,16 @@ public class DictRespond extends Thread implements AutoCloseable {
 				if (msgRecv.length > 0) {
 					if (msgRecv[0].compareTo("Search") == 0) {
 						word = msgRecv[1];
+						if (!map.get(0).containsKey(word)) {
+							map.get(0).put(word, false);
+						}
+						if (!map.get(1).containsKey(word)) {
+							map.get(1).put(word, false);
+						}
+						if (!map.get(2).containsKey(word)) {
+							map.get(2).put(word, false);
+						}
+
 						client.printArray(
 							new String[] { new Search(0, word).getMeaning(),
 								sql.getZan(0, word).toString(),
@@ -75,7 +85,7 @@ public class DictRespond extends Thread implements AutoCloseable {
 						
 						client.printArray(new String[] {
 							sql.getZan(dictIndex, word).toString(),
-							map.get(word).toString(), });
+							map.get(dictIndex).get(word).toString(), });
 						
 					} else if (msgRecv[0].compareTo("SignIn") == 0) {
 						client.printArray(new String[] { sql
@@ -93,13 +103,13 @@ public class DictRespond extends Thread implements AutoCloseable {
 						client.printArray(sql.getOnlineUser());
 						
 					} else if (msgRecv[0].compareTo("Share") == 0) {
-//						sql.setShareWord(msgRecv[1], msgRecv[2], msgRecv[3]);
+						sql.setShareWord(msgRecv[1], msgRecv[2], msgRecv[3]);
 						
 					} else if (msgRecv[0].compareTo("GetWord") == 0) {
 						String[][] shareWords = sql.getShareWord(msgRecv[1]);
 						String[] msgSend = new String[shareWords.length];
 						for (int i = 0; i < shareWords.length; ++i) {
-							msgSend[i] = shareWords[i][0];
+							msgSend[i] = shareWords[i][1];
 						}
 						client.printArray(msgSend);
 						

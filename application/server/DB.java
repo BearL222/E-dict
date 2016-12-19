@@ -128,7 +128,7 @@ class DB {
 		ArrayList<String> result = new ArrayList<String>();
 
 		while (resultSet.next()) {
-			result.add(resultSet.getString(1));
+			result.add(resultSet.getString(1).trim());
 		}
 
 		return result.toArray(new String[result.size()]);
@@ -144,7 +144,7 @@ class DB {
 		ArrayList<String> result = new ArrayList<String>();
 
 		while (resultSet.next()) {
-			result.add(resultSet.getString(1));
+			result.add(resultSet.getString(1).trim());
 		}
 
 		return result.toArray(new String[result.size()]);
@@ -155,7 +155,7 @@ class DB {
 		Connection connection = DriverManager.getConnection(url, user, password);
 		Statement statement = connection.createStatement();
 
-		ResultSet resultSet = statement.executeQuery("SELECT UNAME1,WORD FROM WORD_CARD WHERE UNAME2 = " + name);
+		ResultSet resultSet = statement.executeQuery("SELECT UNAME1,WORD FROM WORD_CARD WHERE UNAME2 = \'" + name+"\'");
 		ArrayList<String> result_sender = new ArrayList<String>();
 		ArrayList<String> result_word = new ArrayList<String>();
 
@@ -165,10 +165,18 @@ class DB {
 		}
 		String[][] result = new String[result_sender.size()][2];
 		for (int i = 0; i < result_sender.size(); i++) {
-			result[i][0] = result_sender.get(i);
-			result[i][1] = result_word.get(i);
+			result[i][0] = result_sender.get(i).trim();
+			result[i][1] = result_word.get(i).trim();
 		}
 
 		return result;
+	}
+	
+	//用户发送单词卡
+	public void setShareWord(String sender,String receiver,String word) throws SQLException{
+		Connection connection = DriverManager.getConnection(url, user, password);
+		Statement statement = connection.createStatement();
+
+		statement.executeUpdate("INSERT INTO WORD_CARD(UNAME1,UNAME2,WORD)VALUES(\'"+sender+"\',\'"+receiver+"\',\'"+word+"\')");
 	}
 }
