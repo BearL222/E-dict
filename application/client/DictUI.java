@@ -72,19 +72,39 @@ public abstract class DictUI extends Application {
 		Button btnSearch = new Button("", new ImageView("/image/Search.png"));
 		btnSearch.setMinSize(30, 30);
 		btnSearch.setPrefSize(30, 30);
-		btnSearch.setOnMouseClicked(o -> btnSearch(turnEnglish(txtInput.getText())));
+		btnSearch.setOnMouseClicked(o -> btnSearch(txtInput.getText()));
+		btnSearch.setDisable(txtInput.getText().compareTo("") == 0);
 		Button btnShare = new Button("", new ImageView("/image/Share.png"));
 		btnShare.setMinSize(30, 30);
 		btnShare.setPrefSize(30, 30);
 		btnShare.setOnMouseClicked(o -> btnShare());
+		btnShare.setDisable((txtInput.getText().compareTo("") == 0) || (lblUser.getText().compareTo("") == 0));
 		Button btnUser = new Button("", new ImageView("/image/User.png"));
 		btnUser.setMinSize(30, 30);
 		btnUser.setPrefSize(30, 30);
 		btnUser.setOnMouseClicked(o -> btnUser());
 
+		txtInput.textProperty().addListener((o, s1, s2) -> {
+			boolean isEng = true;
+			for (int i = 0; i < s2.length(); ++i) {
+				char c = s2.charAt(i);
+				if ((('A' <= c) && (c <= 'Z')) || (('a' <= c) && (c <= 'z')))
+					;
+				else {
+					isEng = false;
+				}
+			}
+			if (!isEng) {
+				txtInput.setText(s1);
+			}
+			btnSearch.setDisable(txtInput.getText().compareTo("") == 0);
+			btnShare.setDisable((txtInput.getText().compareTo("") == 0) || (lblUser.getText().compareTo("") == 0));
+		});
 		lblUser.textProperty().addListener((o, s1, s2) -> {
-			if (s2.compareTo("") == 0) {
-				btnShare.setDisable(false);
+			btnShare.setDisable((txtInput.getText().compareTo("") == 0) || (lblUser.getText().compareTo("") == 0));
+			String str = txtInput.getText();
+			if (str.compareTo("") != 0) {
+				btnSearch(str);
 			}
 		});
 
@@ -105,7 +125,8 @@ public abstract class DictUI extends Application {
 		boxDict.getChildren().addAll(chkDictArray);
 
 		for (int i = 0; i < cardArray.length; ++i) {
-			cardArray[i] = new Card(server, i, DictInfo.info[i].name + "1\n" + DictInfo.info[i].name + "2\n", i);
+			cardArray[i] = new Card(server, i, DictInfo.info[i].name + "1\n" + DictInfo.info[i].name + "2\n", i,
+					lblUser);
 		}
 
 		double boxCardsInset = 10;

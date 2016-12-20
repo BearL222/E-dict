@@ -4,6 +4,7 @@ package application.client;
 import java.util.Arrays;
 
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -36,7 +37,7 @@ public class ShareUI {
 		ListView<String> lstShow = new ListView<>();
 		Button btnUser = new Button("User");
 		Button btnWord = new Button("Word");
-		Button btnShare = new Button("");
+		Button btnShare = new Button("    ");
 		btnShare.setDisable(true);
 
 		lstShow.getSelectionModel().selectedItemProperty().addListener((o, s1, s2) -> {
@@ -62,13 +63,16 @@ public class ShareUI {
 			btnShare.setDisable(false);
 		});
 		btnWord.setOnMouseClicked(e -> {
+			if (me.trim().compareTo("") == 0) {
+				return;
+			}
 			if (showState != ShowWord) {
 				btnShare.setText("Show");
 				lstShow.getSelectionModel().select(0);
 				show = "";
 			}
-			lstShow.setItems(
-					FXCollections.observableList(Arrays.asList(server.readArray(new String[] { "GetWord", me.trim(), }))));
+			lstShow.setItems(FXCollections
+					.observableList(Arrays.asList(server.readArray(new String[] { "GetWord", me.trim(), }))));
 			showState = ShowWord;
 			btnShare.setDisable(false);
 		});
@@ -90,7 +94,18 @@ public class ShareUI {
 				break;
 			}
 		});
+		btnUser.setPrefWidth(Double.MAX_VALUE);
+		btnWord.setPrefWidth(Double.MAX_VALUE);
+		btnShare.setPrefWidth(Double.MAX_VALUE);
 
+		double rootPaneInset = 20;
+		rootPane.setVgap(10);
+		rootPane.setHgap(10);
+		rootPane.setPadding(new Insets(rootPaneInset, rootPaneInset, rootPaneInset, rootPaneInset));
+		rootPane.getColumnConstraints().addAll(new ColumnConstraints(80), new ColumnConstraints(80),
+				new ColumnConstraints(80));
+		double lstHeight = 300;
+		rootPane.getRowConstraints().addAll(new RowConstraints(50), new RowConstraints(lstHeight));
 		rootPane.add(btnUser, 0, 0);
 		rootPane.add(btnWord, 1, 0);
 		rootPane.add(btnShare, 2, 0);
@@ -99,8 +114,8 @@ public class ShareUI {
 		Scene scene = new Scene(rootPane);
 		primaryStage.setTitle("User");
 		primaryStage.setScene(scene);
-		primaryStage.setWidth(300);
-		primaryStage.setHeight(800);
+		primaryStage.setWidth(330);
+		primaryStage.setHeight(lstHeight + 150);
 		primaryStage.show();
 		primaryStage.setResizable(false);
 
