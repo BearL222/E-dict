@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.*;
-
 import debug.Debug;
 import net.SocketStream;
 
@@ -57,7 +56,7 @@ public class DictRespond extends Thread implements AutoCloseable {
 						if (!map.get(2).containsKey(word)) {
 							map.get(2).put(word, false);
 						}
-
+						
 						client.printArray(
 							new String[] { new Search(0, word).getMeaning(),
 								sql.getZan(0, word).toString(),
@@ -92,8 +91,11 @@ public class DictRespond extends Thread implements AutoCloseable {
 							.signinUser(msgRecv[1], msgRecv[2]).toString() });
 						
 					} else if (msgRecv[0].compareTo("SignUp") == 0) {
-						client.printArray(new String[] { sql
-							.signupUser(msgRecv[1], msgRecv[2]).toString() });
+						Integer t = sql.signupUser(msgRecv[1], msgRecv[2]);
+						if (t == 0) {
+							sql.signinUser(msgRecv[1], msgRecv[2]);
+						}
+						client.printArray(new String[] { t.toString() });
 						
 					} else if (msgRecv[0].compareTo("SignOut") == 0) {
 						client.printArray(new String[] {
