@@ -13,7 +13,7 @@ public class DictServer {
 			while (true) { /* for (int i = 0; i < 10; ++i) */
 				// new DictRespond(server.accept(), null).run();
 				try {
-					new DictRespond(server.accept(), new DB()).run();
+					new DictRespond(server.accept(), new DB()).start();
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}

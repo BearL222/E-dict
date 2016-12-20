@@ -78,7 +78,8 @@ public abstract class DictUI extends Application {
 		btnShare.setMinSize(30, 30);
 		btnShare.setPrefSize(30, 30);
 		btnShare.setOnMouseClicked(o -> btnShare());
-		btnShare.setDisable((txtInput.getText().compareTo("") == 0) || (lblUser.getText().compareTo("") == 0));
+		btnShare.setDisable((lblUser.getText().compareTo("") == 0));
+//		btnShare.setDisable((txtInput.getText().compareTo("") == 0) || (lblUser.getText().compareTo("") == 0));
 		Button btnUser = new Button("", new ImageView("/image/User.png"));
 		btnUser.setMinSize(30, 30);
 		btnUser.setPrefSize(30, 30);
@@ -98,10 +99,10 @@ public abstract class DictUI extends Application {
 				txtInput.setText(s1);
 			}
 			btnSearch.setDisable(txtInput.getText().compareTo("") == 0);
-			btnShare.setDisable((txtInput.getText().compareTo("") == 0) || (lblUser.getText().compareTo("") == 0));
+			btnShare.setDisable((lblUser.getText().compareTo("") == 0));
 		});
 		lblUser.textProperty().addListener((o, s1, s2) -> {
-			btnShare.setDisable((txtInput.getText().compareTo("") == 0) || (lblUser.getText().compareTo("") == 0));
+			btnShare.setDisable((lblUser.getText().compareTo("") == 0));
 			String str = txtInput.getText();
 			if (str.compareTo("") != 0) {
 				btnSearch(str);
