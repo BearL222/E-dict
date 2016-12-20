@@ -47,7 +47,7 @@ class Card extends GridPane implements Comparable<Card> {
 
 		super.setVgap(5);
 
-		super.getColumnConstraints().addAll(col, new ColumnConstraints(50));
+		super.getColumnConstraints().addAll(col, new ColumnConstraints(100));
 		super.getRowConstraints().addAll(new RowConstraints(30), row);
 
 		super.add(lblDict, 0, 0, 1, 1);
