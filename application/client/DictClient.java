@@ -20,7 +20,7 @@ public class DictClient extends DictUI implements AutoCloseable {
 			System.out.println(Arrays.toString(args));
 
 		try {
-			SocketStream server = new SocketStream(new Socket("127.0.0.1", Connect.SERVER_PORT));
+			SocketStream server = new SocketStream(new Socket("114.212.131.118", Connect.SERVER_PORT));
 			DictClient.server = server;
 		} catch (IOException e) {
 			e.printStackTrace();
